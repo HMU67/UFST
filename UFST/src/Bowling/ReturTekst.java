@@ -8,7 +8,7 @@ public  class ReturTekst {
 	public ReturTekst() {
 		
 	}
-	public ReturTekst(String returTekst, int fejlnr){
+	public ReturTekst(int fejlnr, String returTekst){
 		super();
 		this.returTekst = returTekst;
 		this.fejlNr = fejlnr;

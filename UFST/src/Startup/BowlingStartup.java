@@ -12,8 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import Bowling.BowlingPointSaet;
 import Bowling.ReturTekst;
 import Bowling.BowlingData;
 import Bowling.BowlingDataBlok;
@@ -29,12 +29,14 @@ public class BowlingStartup {
 //		setSize(300,100);
 	public static void main(String[] args) throws IOException, JSONException {
 		Get jsonReader = new Get();
-		BowlingDataBlok bowlingDataBlok = jsonReader.laesJsonFraUrl(); 
+		BowlingDataBlok bowlingDataBlok = jsonReader.hentDataFraUrl();
+		BowlingData bowlingData = new BowlingData();
+		
         if (bowlingDataBlok.getReturTekst().getFejlNr() != 0) {
         	;
         }
 		
-		BowlingData bowlingData = bowlingDataBlok.getBowlingData();
+		bowlingData = bowlingDataBlok.getBowlingData();
 		ReturTekst returTekst = bowlingData.ValidateBowlingSaetListe(bowlingData.getBowlingPointListe());
 		if (returTekst.getFejlNr() != 0) {
 				;

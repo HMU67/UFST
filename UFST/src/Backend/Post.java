@@ -1,19 +1,15 @@
 package Backend;
 
-import org.apiguardian.api.API;
-import org.json.HTTP;
 import org.json.JSONObject;
-import Bowling.BowlingDataBlok;
-import Bowling.BowlingPointSaet;
+import org.json.JSONWriter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringJoiner;
-//import javax.xml.ws.spi.http.HttpHandler;
 import java.io.OutputStreamWriter;
 
 public class Post {
@@ -43,22 +39,31 @@ public class Post {
 	
 	public void postPointResultaer (String token, int[] bowlingPoint) {
 		try {
+
+			URL url=new URL("http://13.74.31.101/api/points");
+			HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+			httpCon.setRequestProperty("Content-Type", "application/json; utf-8");
+			httpCon.setRequestProperty("Accept", "application/json");
+			httpCon.setDoOutput(true);
 			JSONObject msg = new JSONObject();
 			msg.put("token", token);
 			msg.put("points", bowlingPoint);
-			URL url=new URL("http://13.74.31.101/api/points");
 
-			HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-			httpCon.setDoOutput(true);
-			httpCon.setDoInput(true);
-			httpCon.setUseCaches(false);
-			httpCon.setRequestMethod("POST");
-			httpCon.connect();
-			OutputStream os = httpCon.getOutputStream();
-			OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-			osw.write(msg.toString());
-			osw.flush();
-			osw.close();    
+			try(OutputStream os = httpCon.getOutputStream()){
+			    byte[] input = msg.toString().getBytes("utf-8");
+			    os.write(input, 0, input.length);			
+			}
+
+			try(BufferedReader br = new BufferedReader(
+					  new InputStreamReader(httpCon.getInputStream(), "utf-8"))) {
+					    StringBuilder response = new StringBuilder();
+					    String responseLine = null;
+					    while ((responseLine = br.readLine()) != null) {
+					        response.append(responseLine.trim());
+					    }
+					    System.out.println(response.toString());
+					}
+
 		} catch (Exception e) {
 			
 		}

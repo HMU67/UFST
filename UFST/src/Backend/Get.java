@@ -34,7 +34,7 @@ public class Get {
 		return sb.toString();
 	}
 
-	public static JSONObject laesJsonFraUrl(String url) throws IOException, JSONException {
+	private static JSONObject laesJsonFraUrl(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
 		try {
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
@@ -45,15 +45,15 @@ public class Get {
 			is.close();
 		}
 	}
-
-	public BowlingDataBlok laesJsonFraUrl() throws IOException, JSONException {
+	
+	public BowlingDataBlok hentDataFraUrl () throws IOException, JSONException {
 
 		JSONObject json = laesJsonFraUrl("http://13.74.31.101/api/points");
 		JSONArray points = json.getJSONArray("points");
 		BowlingDataBlok bowlingDataBlok = new BowlingDataBlok();
 		
         if (points.length() > 11) {
-        	ReturTekst returTekst = new ReturTekst("Modtaget pointsæt for lang",200); 
+        	ReturTekst returTekst = new ReturTekst(200, "Modtaget pointsæt for lang"); 
         	bowlingDataBlok.setReturTekst(returTekst);
         	return bowlingDataBlok;
         }
@@ -62,7 +62,9 @@ public class Get {
         for (int y=0; y<points.length(); y++){
 
         	int value1 = Integer.parseInt(points.getJSONArray(y).get(0).toString());
+    	    System.out.println(value1);
         	int value2 = Integer.parseInt(points.getJSONArray(y).get(1).toString());
+    	    System.out.println(value2);
         	BowlingPointSaet bowlingPointSaet = new BowlingPointSaet(value1, value2);
         	ReturTekst returTekst = bowlingPointSaet.ValidateBowlingSaetVaerdier(bowlingPointSaet, y); 
         	if (returTekst.getFejlNr() != 0  ) {
@@ -73,8 +75,8 @@ public class Get {
         }
 		BowlingData bowlingData = new BowlingData((json.get("token")).toString(), bowlingPointSaetList);
         bowlingDataBlok.setBowlingData(bowlingData);		
-    	ReturTekst returTekst = new ReturTekst("OK",0); 
+    	ReturTekst returTekst = new ReturTekst(0, "OK"); 
     	bowlingDataBlok.setReturTekst(returTekst);
-		return bowlingDataBlok;
+    	return bowlingDataBlok;
 	}
 }
