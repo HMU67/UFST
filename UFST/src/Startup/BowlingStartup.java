@@ -1,49 +1,38 @@
 package Startup;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import Backend.Get;
 import Backend.Post;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import Bowling.ReturTekst;
-import Bowling.BowlingData;
+import Bowling.Bowling;
 import Bowling.BowlingDataBlok;
 
 public class BowlingStartup {
-//	public class BowlingStartup extends JFrame implements ActionListener{
-//	private BowlingStartup bowlingStartup;
-//	private JLabel startup;
-//
-//	public BowlingStartup (String title) {
-//		super(title);
-//		getCDontentPane().setLayout(new FlowLayout());
-//		setSize(300,100);
 	public static void main(String[] args) throws IOException, JSONException {
-		Get jsonReader = new Get();
-		BowlingDataBlok bowlingDataBlok = jsonReader.hentDataFraUrl();
-		BowlingData bowlingData = new BowlingData();
+		for (int i=0; i<50; i++) {
+			Get jsonReader = new Get();
+			BowlingDataBlok bowlingDataBlok = jsonReader.hentDataFraUrl();
 		
-        if (bowlingDataBlok.getReturTekst().getFejlNr() != 0) {
-        	;
-        }
+			if (bowlingDataBlok.getReturTekst().getFejlNr() != 0) {
+				System.out.println(bowlingDataBlok.getReturTekst().getFejlNr());;
+				System.out.println(bowlingDataBlok.getReturTekst().getFejlTekst());;
+				break;
+			}
 		
-		bowlingData = bowlingDataBlok.getBowlingData();
-		ReturTekst returTekst = bowlingData.ValidateBowlingSaetListe(bowlingData.getBowlingPointListe());
-		if (returTekst.getFejlNr() != 0) {
-				;
-		}
-    	int[] bowlingPoint = bowlingData.BeregnBowlingPoint(bowlingData.getBowlingPointListe());
-	    Post postResult = new Post();
-	    postResult.postPointResultaer(bowlingData.getToken(), bowlingPoint);
-	}		
-//	}
+			Bowling bowlingData = bowlingDataBlok.getBowlingData();
+			ReturTekst returTekst = bowlingData.ValidateBowlingSaetListe(bowlingData.getBowlingPointListe());
+			if (returTekst.getFejlNr() != 0) {
+				System.out.println(returTekst.getFejlNr());;
+				System.out.println(returTekst.getFejlTekst());;
+				break;
+			}
+			int[] bowlingPoint = bowlingData.BeregnBowlingPoint(bowlingData.getBowlingPointListe());
+			Post postResult = new Post();
+	    	String svar = postResult.postPointResultater(bowlingData.getToken(), bowlingPoint);
+	    	System.out.println(svar);
+		}		
+	}
 }

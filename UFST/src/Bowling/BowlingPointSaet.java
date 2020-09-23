@@ -4,10 +4,6 @@ public class BowlingPointSaet {
 	private int point1;
 	private int point2;
 	
-	public BowlingPointSaet() {
-		super();
-	}
-
 	public BowlingPointSaet(int point1, int point2) {
 		super();
 		this.point1 = point1;

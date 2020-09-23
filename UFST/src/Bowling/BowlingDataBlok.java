@@ -2,13 +2,13 @@ package Bowling;
 
 public class BowlingDataBlok {
 	
-	BowlingData bowlingData;
+	Bowling bowlingData;
 	ReturTekst returTekst;
 	
-	public BowlingData getBowlingData() {
+	public Bowling getBowlingData() {
 		return bowlingData;
 	}
-	public void setBowlingData(BowlingData bowlingData) {
+	public void setBowlingData(Bowling bowlingData) {
 		this.bowlingData = bowlingData;
 	}
 	public ReturTekst getReturTekst() {

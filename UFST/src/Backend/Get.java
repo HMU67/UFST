@@ -7,10 +7,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
-import Bowling.BowlingData;
+import Bowling.Bowling;
 import Bowling.BowlingDataBlok;
 import Bowling.BowlingPointSaet;
 import Bowling.ReturTekst;
@@ -21,10 +19,6 @@ import org.json.JSONObject;
 
 public class Get {
 
-	public Get() {
-//		super();
-	}
-  	
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int cp;
@@ -62,9 +56,7 @@ public class Get {
         for (int y=0; y<points.length(); y++){
 
         	int value1 = Integer.parseInt(points.getJSONArray(y).get(0).toString());
-    	    System.out.println(value1);
         	int value2 = Integer.parseInt(points.getJSONArray(y).get(1).toString());
-    	    System.out.println(value2);
         	BowlingPointSaet bowlingPointSaet = new BowlingPointSaet(value1, value2);
         	ReturTekst returTekst = bowlingPointSaet.ValidateBowlingSaetVaerdier(bowlingPointSaet, y); 
         	if (returTekst.getFejlNr() != 0  ) {
@@ -73,7 +65,7 @@ public class Get {
         	}
         	bowlingPointSaetList[y] = bowlingPointSaet;
         }
-		BowlingData bowlingData = new BowlingData((json.get("token")).toString(), bowlingPointSaetList);
+		Bowling bowlingData = new Bowling((json.get("token")).toString(), bowlingPointSaetList);
         bowlingDataBlok.setBowlingData(bowlingData);		
     	ReturTekst returTekst = new ReturTekst(0, "OK"); 
     	bowlingDataBlok.setReturTekst(returTekst);
