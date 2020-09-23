@@ -25,6 +25,8 @@ public class Post {
 			try (OutputStream os = httpCon.getOutputStream()) {
 				byte[] input = msg.toString().getBytes("utf-8");
 				os.write(input, 0, input.length);
+			} catch (Exception e) {
+//   		her skal der implementeres fejlhåndtering				
 			}
 
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "utf-8"))) {
@@ -34,10 +36,12 @@ public class Post {
 					response.append(responseLine.trim());
 				}
 				svar = response.toString();
+			} catch (Exception e) {
+//	   		her skal der implementeres fejlhåndtering				
 			}
 
 		} catch (Exception e) {
-
+//   		her skal der implementeres fejlhåndtering				
 		}
 		return svar;
 	}

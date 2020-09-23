@@ -1,18 +1,19 @@
 package Bowling;
 
+import java.io.IOException;
+
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
+import Backend.Get;;
+
 public class BowlingTest {
 
-	@Before
-	public void hentDataFraUrl(){
-		
-	}
 
-	public void postPointResultaer(){
-		
+	@Before
+	public void setup(){
 	}
 	
 	@Test
@@ -346,5 +347,12 @@ public class BowlingTest {
 		bowlingData.setBowlingPointListe(bowlingPointSaet);
         int[] pointResultat = {19,28,37,40,56,62,63,79,85,105};
 		Assert.assertArrayEquals(pointResultat, bowlingData.BeregnBowlingPoint(bowlingPointSaet));
+	}
+	@Test
+	public void hentDataFraUrl1() throws IOException, JSONException {
+		Get jsonReader = new Get();
+		BowlingDataBlok bowlingDataBlok = jsonReader.hentDataFraUrl();
+	    Assert.assertEquals(0,bowlingDataBlok.returTekst.getFejlNr());
+	    Assert.assertEquals("OK",bowlingDataBlok.returTekst.getFejlTekst());
 	}
 }	

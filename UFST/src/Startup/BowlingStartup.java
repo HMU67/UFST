@@ -12,8 +12,8 @@ import Bowling.BowlingDataBlok;
 
 public class BowlingStartup {
 	public static void main(String[] args) throws IOException, JSONException {
-		for (int i=0; i<50; i++) {
-			Get jsonReader = new Get();
+		for (int i=0; i<10; i++) {
+			Get jsonReader = new Get(); 
 			BowlingDataBlok bowlingDataBlok = jsonReader.hentDataFraUrl();
 		
 			if (bowlingDataBlok.getReturTekst().getFejlNr() != 0) {
@@ -32,6 +32,8 @@ public class BowlingStartup {
 			int[] bowlingPoint = bowlingData.BeregnBowlingPoint(bowlingData.getBowlingPointListe());
 			Post postResult = new Post();
 	    	String svar = postResult.postPointResultater(bowlingData.getToken(), bowlingPoint);
+//   		her skal der implementeres fejlhåndtering				
+	    	System.out.println(bowlingData.getToken());
 	    	System.out.println(svar);
 		}		
 	}
